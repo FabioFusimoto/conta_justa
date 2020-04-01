@@ -1,0 +1,31 @@
+- Install Python 3
+
+- Install pip
+	pip install -r requirements.txt
+
+- Setup a virtual environment
+
+- Install requirements
+
+- Setup database
+	# username@computername:~$ sudo su - postgres
+	# postgres@computername:~$ psql
+	# postgres=# CREATE TABLE conta_justa;
+	# postgres=# \q
+	# postgres@computername:~$ createuser --interactive --pwprompt
+	# Enter name of role to add: conta_justa
+	# Enter password for new role: conta_justa
+	# Enter it again: conta_justa
+	# Shall the new role be a superuser? (y/n) y
+	# postgres@computername:~$ psql
+	# postgres=# GRANT ALL PRIVILEGES ON DATABASE conta_justa TO conta_justa;
+	# GRANT
+
+- Run migrations 
+	python3 manage.py migrate
+
+- Start the app (runs from localhost:3003)
+	python3 manage.py runserver 3003
+
+- Admin endpoint at /admin
+	Username: 'admin' Password: 'admin' > Superuser login
