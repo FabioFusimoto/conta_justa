@@ -1,11 +1,18 @@
 - Install Python 3
 
-- Install pip
-	pip install -r requirements.txt
+- Install pip3	
+
+* The following commands where executed on Ubuntu 18.04. Windows commands may be different
 
 - Setup a virtual environment
+	virtualenv -p /usr/bin/python3 virtualenvironment && cd virtualenvironment
+	source ./bin/activate
+
+- Clone package
+	git clone git@github.com:FabioFusimoto/conta_justa.git && cd conta_justa
 
 - Install requirements
+	pip3 install -r requirements.txt
 
 - Setup database
 	# username@computername:~$ sudo su - postgres
