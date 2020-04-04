@@ -10,7 +10,7 @@ Este projeto visa criar um dashboard de controle para divisão de contas de ener
 - [Python 3.6.9](https://www.python.org/about/)
 - [Django 3.0.5](https://www.djangoproject.com/)
 - [PostgreSQL 10.12](https://www.postgresql.org/)
-- *>>>ADICIONAR O FRAMEWORK DE KAFKA<<<*
+- [Django-RQ](https://github.com/rq/django-rq)
 
 ## Instalação
 Os comandos de instalação foram testados no Ubuntu 18.04 e podem ser ligeiramente diferentes no Windows.
@@ -38,9 +38,9 @@ Os comandos de instalação foram testados no Ubuntu 18.04 e podem ser ligeirame
 `$ pip3 install -r requirements.txt  #Linux`  ou `$ pip install -r requirements.txt #Windows`<br/>
 - Execute as migrações do banco de dados<br/>
 `python3 manage.py migrate`<br/>
-- Inicie o Redis broker
+- Inicie o Redis broker<br/>
 `redis-server`
-- Inicie o RQ-Worker
+- Inicie o RQ-Worker<br/>
 `python3 manage.py rqworker default`
 - Inicie o servidor (roda em [localhost:3030](localhost:3030))<br/>
 `python3 manage.py runserver 3030`<br/>
@@ -51,8 +51,7 @@ Os diretórios estão dispostos para seguir a arquitetura hexagonal modificada p
 >├── conta_justa/ ------>  Setup do Django<br/>
 >├── server/  &nbsp;----------> O backend em si<br/>
 > &nbsp; &nbsp; &nbsp; ├── application/ &nbsp;&nbsp;--> Casos de uso<br/>
-> &nbsp; &nbsp; &nbsp; ├── connectors/ &nbsp;--> Conexão com o banco de dados/filas do Kafka<br/>
+> &nbsp; &nbsp; &nbsp; ├── connectors/ &nbsp;--> Conexão com o banco de dados/filas do Redis<br/>
 > &nbsp; &nbsp; &nbsp; ├── domain/ ------> Regras de negócio e funções de propósito geral<br/>
-> &nbsp; &nbsp; &nbsp; ├── infrastructure/ -> Tradução de dados vindos dos connectors ou vice-versa<br/>
 > &nbsp; &nbsp; &nbsp; ├── tests/ --------> Testes de funcionamento pontuais e ponta-a-ponta<br/>
 > &nbsp; &nbsp; &nbsp; ├── models.py ----> Descrição das entidades do banco de dados<br/>
