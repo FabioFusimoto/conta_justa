@@ -12,7 +12,7 @@ Este projeto visa criar um dashboard de controle para divisão de contas de ener
 - [PostgreSQL 10.12](https://www.postgresql.org/)
 - [Django-RQ](https://github.com/rq/django-rq)
 
-## Instalação
+## Instalação e Configuração
 Os comandos de instalação foram testados no Ubuntu 18.04 e podem ser ligeiramente diferentes no Windows.
 - Instale a versão mais recente do [Python 3.6](https://www.python.org/downloads/)
 - Baixe e instale o [Postgres 10](https://www.postgresql.org/download/)
@@ -37,19 +37,28 @@ Os comandos de instalação foram testados no Ubuntu 18.04 e podem ser ligeirame
 - Instale as dependências<br/>
 `$ pip3 install -r requirements.txt  #Linux`  ou `$ pip install -r requirements.txt #Windows`<br/>
 - Execute as migrações do banco de dados<br/>
-`python3 manage.py migrate`<br/>
+`$ python3 manage.py migrate`<br/>
+- Crie um usuário com permissões de administrador<br/>
+`$ python3 manage.py createsuperuser`<br/>
+`Username: admin`<br/>
+`Email address: admin@admin.com`<br/>
+`Password: admin`<br/>
+`Password (again): admin`<br/>
+`Bypass password validation and create user anyway? [y/N]: y`<br/>
+
+## Executando o servidor
 - Inicie o Redis broker<br/>
-`redis-server`
+`$ redis-server`
 - Inicie o RQ-Worker<br/>
-`python3 manage.py rqworker default`
+`$ python3 manage.py rqworker default`
 - Inicie o servidor (roda em [localhost:3030](localhost:3030))<br/>
-`python3 manage.py runserver 3030`<br/>
+`# python3 manage.py runserver 3030`<br/>
 
 ## Organização de diretórios
 Os diretórios estão dispostos para seguir a arquitetura hexagonal modificada proposta no [vídeo de detalhamento do projeto](https://www.youtube.com/watch?v=7ZmzBEF5uiQ&list=UUH9esjC9hxJvEErKOnuPiXQ). Algumas exceções à disposição da arquitetura existem para atender às restrições de diretório impostas pelo Django. As pastas relevantes estão descritas abaixo
 
 >├── conta_justa/ ------>  Setup do Django<br/>
->├── server/  &nbsp;----------> O backend em si<br/>
+>├── server/  &nbsp;----------> O servidor backend em si<br/>
 > &nbsp; &nbsp; &nbsp; ├── application/ &nbsp;&nbsp;--> Casos de uso<br/>
 > &nbsp; &nbsp; &nbsp; ├── connectors/ &nbsp;--> Conexão com o banco de dados/filas do Redis<br/>
 > &nbsp; &nbsp; &nbsp; ├── domain/ ------> Regras de negócio e funções de propósito geral<br/>

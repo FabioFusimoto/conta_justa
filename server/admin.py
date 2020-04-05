@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import User, Equipment, UserEquipment, Measurement
+
+for model in [User, Equipment, UserEquipment, Measurement]:
+    admin.site.register(model)
