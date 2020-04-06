@@ -16,8 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from server.tasks import measurement_scheduler, mock_measures
+
+from server.constants import UPDATE_MEASURE_EVENT
+
 urlpatterns = [
     path('server/', include('server.urls')),
     path('admin/', admin.site.urls),
     path('django-rq/', include('django_rq.urls')),
 ]
+
+listOfMeasurement = mock_measures(repeat=10, repeat_until=None)
+
+measurement_scheduler(UPDATE_MEASURE_EVENT, listOfMeasurement=listOfMeasurement, repeat=10, repeat_until=None)

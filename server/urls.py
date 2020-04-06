@@ -8,4 +8,5 @@ urlpatterns = [
     path('add-equipment', views.newEquipment, name='add-equipment'),
     path('add-user-via-handler', views.newUserViaHandler, name='add-user-via-handler'),
     path('add-equipment-via-handler', views.newEquipmentViaHandler, name='add-equipment-via-handler'),
+    path('update-measurement-via-handler', views.updateMeasurementViaHandler, name='update-measurement-via-handler'),
 ]

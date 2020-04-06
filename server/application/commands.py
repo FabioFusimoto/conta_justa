@@ -1,8 +1,8 @@
 # SELECT
-from ..connectors.database import findUserByName, findAllUsers
+from ..connectors.database import findUserByName, findAllUsers, findEquipmentByID
 
 # INSERT
-from ..connectors.database import createUser, createEquipment, createUserEquipment, createMeasurement
+from ..connectors.database import createUser, createEquipment, createUserEquipment, createMeasurement, updateMeasurement
 
 # User
 def addUser(name):
@@ -36,3 +36,12 @@ def addEquipment(equipmentName, userName, shared=False):
             return "O equipamento com o nome fornecido já está registrado. Escolha outro nome"
     else:
         return "O nome de usuário fornecido não existe"
+
+def updateMeasure(equipmentID, consumption, measuredAt):
+    equipment = findEquipmentByID(equipmentID)
+    if equipment:
+        updateMeasurement(equipment, consumption, measuredAt)
+        return "A medida do equipamento {}: {} foi atualizada".format(equipmentID, equipment.name)
+    else:
+        return "Equipamento não existente"
+

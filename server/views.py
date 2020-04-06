@@ -7,6 +7,7 @@ from .application.commands import addUser, addEquipment
 from .connectors.queue import handler
 from .constants import ADD_USER_EVENT, ADD_EQUIPMENT_EVENT
 
+
 def printMessage(header, message):
     print(header)
     print(message)
@@ -33,6 +34,18 @@ def newEquipment(request):
     else:
         return HttpResponse("Invalid request")
 
+def updateMeasurement(request):
+    body = json.loads(request.body)
+    equipmentID = body["equipmentID"]
+    consumption = body["consumption"]
+    measuredAt = body["measuredAt"]
+    if request.method == "POST":
+        return HttpResponse(
+            updateMeasure(equipmentID=equipmentID, consumption=consumption, measureAt=measuredAt)
+        )
+    else:
+        return HttpResponse("Invalid request")
+
 def newUserViaHandler(request):
     userName = json.loads(request.body)['name']
     if request.method == 'POST':
@@ -49,5 +62,16 @@ def newEquipmentViaHandler(request):
     if request.method == 'POST' and equipmentName and userName:
         django_rq.enqueue(handler, eventName=ADD_EQUIPMENT_EVENT, equipmentName=equipmentName, userName=userName, shared=shared)
         return HttpResponse("Evento de criação de novo equipamento adicionado à fila")
+    else:
+        return HttpResponse("Invalid request")
+
+def updateMeasurementViaHandler(request):
+    body = json.loads(request.body)
+    equipmentID = body["equipmentID"]
+    consumption = body["consumption"]
+    measuredAt = body["measuredAt"]
+    if request.method == "POST":
+        django_rq.enqueue(handler, eventName=UPDATE_MEASURE_EVENT, equipmentID=equipmentID, consumption=consumption, measureAt=measuredAt)
+        return HttpResponse("Evento de atualização de medida adicionado à fila")
     else:
         return HttpResponse("Invalid request")

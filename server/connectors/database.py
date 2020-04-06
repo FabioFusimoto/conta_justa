@@ -8,6 +8,12 @@ def findUserByName(name):
 def findAllUsers():
     return User.objects.all()
 
+def findEquipmentByID(equipmentID):
+    return Equipment.objects.all().filter(id = equipmentID)
+
+def findMeasurementByEquipment(equipment):
+    return Measurement.objects.all().filter(equipment=equipment)
+
 def createUser(name):
     try:
         newUser = User(name=name)
@@ -35,3 +41,9 @@ def createUserEquipment(user, equipment):
 def createMeasurement(equipmentId, consumption, measuredAt):
     newMeasurement(equipmentId=equipmentId, consumption=consumption, measuredAt=measuredAt)
     newMeasurement.save()
+
+def updateMeasurement(equipment, consumption, measuredAt):
+    measurement = findMeasurementByEquipment(equipment)
+    measurement.consumption += consumption
+    measurement.measuredAt = measuredAt
+    measurement.save()
