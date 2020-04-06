@@ -28,4 +28,4 @@ urlpatterns = [
 
 listOfMeasurement = mock_measures(repeat=10, repeat_until=None)
 
-measurement_scheduler(UPDATE_MEASURE_EVENT, listOfMeasurement=listOfMeasurement, repeat=10, repeat_until=None)
+measurement_scheduler(eventName=UPDATE_MEASURE_EVENT, listOfMeasurement=listOfMeasurement, repeat=10, repeat_until=None)
