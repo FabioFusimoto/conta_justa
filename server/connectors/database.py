@@ -1,5 +1,7 @@
+import datetime
 from django.db import IntegrityError
 from ..models import User, Equipment, Measurement, Bill
+from ..constants import SHARED_USER_ID
 
 # User
 def findUserByName(name):
@@ -32,15 +34,46 @@ def createEquipment(name, user):
 def findEquipmentByName(name):
     return Equipment.objects.all().filter(name=name)[:1]
 
+def findAllEquipmentsForUser(user):
+    return Equipment.objects.all().filter(user=user)
+
 # Measurement
 def createMeasurement(equipment, consumption):
     newMeasurement = Measurement(equipment=equipment, consumption=consumption) # o campo measuredAt é automaticamente setado para now(), ver o models.py
     newMeasurement.save()
+    return newMeasurement
+
+def findAllMeasurementsForYearMonth(year, month):
+    start = datetime.datetime(year=year, month=month, day=1)
+    newMonth = month + 1
+    newYear = year
+    if month == 13:
+        nextMonth = 1
+        newYear = newYear + 1
+    finish = datetime.datetime(year=newYear, month=newMonth, day=1)
+    return Measurement.objects.all().filter(measuredAt__range=(start, finish))
+
+def findAllMeasurementsForYearMonthEquipment(equipment, year, month):
+    start = datetime.datetime(year=year, month=month, day=1)
+    newMonth = month + 1
+    newYear = year
+    if month == 13:
+        nextMonth = 1
+        newYear = newYear + 1
+    finish = datetime.datetime(year=newYear, month=newMonth, day=1)
+
+    return Measurement.objects.all().filter(equipment=equipment, measuredAt__range=(start, finish))
 
 # Bill
-def createBill(user, year, month, consumption, amount):
-    newBill(user=user, year=year, month=month, consumption=consumption, amount=amount)
+def findBill(year, month):
+    return Bill.objects.all().filter(year=year, month=month)[:1]
+
+def createBill(year, month, consumption, amount):
+    newBill = Bill(year=year, month=month, consumption=consumption, amount=amount)
     newBill.save()
 
-def findBill(user, year, month):
-    return Bill.objects.all().filter(user=user, year=year, month=month)
+def updateBill(year, month, consumption, amount):
+    billToUpdate = Bill.objects.get(year=year, month=month)
+    billToUpdate.consumption = consumption
+    billToUpdate.amount = amount
+    billToUpdate.save()

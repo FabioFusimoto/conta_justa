@@ -33,7 +33,6 @@ class Measurement(models.Model):
         )
 
 class Bill(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     year = models.IntegerField()
     month = models.IntegerField()
     consumption = models.DecimalField(max_digits=20, decimal_places=3)
@@ -43,7 +42,6 @@ class Bill(models.Model):
     def __str__(self):
         return(
             "ID: " + str(self.id) + "\n"
-            "Usuário: " + str(self.user.name) + "\n"
             "Mês: " + str(self.month) + "/" + str(year) + "\n"
             "Consumo: " + str(self.consumption) + "\n"
             "Valor: " + str(self.amount) + "\n"
