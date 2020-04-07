@@ -1,8 +1,10 @@
 # SELECT
-from ..connectors.database import findUserByName, findAllUsers
+from ..connectors.database import findUserById, findUserByName, findAllUsers, findEquipmentByName, findBill
 
 # INSERT
-from ..connectors.database import createUser, createEquipment, createUserEquipment, createMeasurement
+from ..connectors.database import createUser, createEquipment, createMeasurement
+
+from ..constants import SHARED_USER_ID
 
 # User
 def addUser(name):
@@ -16,23 +18,29 @@ def addUser(name):
 
 # Equipment
 def addEquipment(equipmentName, userName, shared=False):
-    relatedUser=findUserByName(name=userName)[0]
-    print(relatedUser)
+    if shared:
+        relatedUser = findUserById(id=SHARED_USER_ID)[0]
+    else:
+        relatedUser = findUserByName(name=userName)[0]
+
     if relatedUser.id:
-        newEquipment = createEquipment(name=equipmentName, shared=shared)
-        relatedUserNames = []
+        newEquipment = createEquipment(name=equipmentName, user=relatedUser)
         if newEquipment:
-            if not shared:
-                createUserEquipment(user=relatedUser, equipment=newEquipment)
-                relatedUserNames.append(relatedUser.name)
+            if shared:
+                return "Equipamento compartilhado '" + equipmentName + "' criado"
             else:
-                allUsers = findAllUsers()
-                for user in allUsers:
-                    createUserEquipment(user=user, equipment=newEquipment)
-                    relatedUserNames.append(user.name)
-            return ("Equipamento " + equipmentName + " adicionado com sucesso.\n" +
-                    "Usuários relacionados ao equipamento: " + str(relatedUserNames))
+                return "Equipamento '" + equipmentName + "' do usuário " + userName + " criado"
         else:
             return "O equipamento com o nome fornecido já está registrado. Escolha outro nome"
     else:
         return "O nome de usuário fornecido não existe"
+
+# Measurement
+def addMeasurement(equipmentName, consumption):
+    relatedEquipment = findEquipmentByName(name=equipmentName)[0]
+
+    if relatedEquipment.id:
+        createMeasurement(equipment=relatedEquipment, consumption=consumption)
+        return "Medição adicionada com sucesso"
+    else:
+        return "O equipamento com o nome fornecido não existe"
