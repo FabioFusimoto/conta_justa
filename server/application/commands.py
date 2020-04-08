@@ -1,8 +1,15 @@
 # SELECT
-from ..connectors.database import findUserByName, findAllUsers
+from ..connectors.database import findUserById, findUserByName, findAllUsers, findEquipmentByName, findBill, findUserBill
 
 # INSERT
-from ..connectors.database import createUser, createEquipment, createUserEquipment, createMeasurement
+from ..connectors.database import createUser, createEquipment, createMeasurement, createBill, createUserBill
+
+# UPDATE
+from ..connectors.database import updateBill, updateUserBill
+
+from ..constants import SHARED_USER_ID
+from .query import getBillParameters, getUserConsumption, getSharedConsumption
+from ..domain.domain import calculateUserBillAmount, calculateUserConsumption
 
 # User
 def addUser(name):
@@ -16,28 +23,27 @@ def addUser(name):
 
 # Equipment
 def addEquipment(equipmentName, userName, shared=False):
-    relatedUser=findUserByName(name=userName)[0]
-    print(relatedUser)
+    if shared:
+        relatedUser = findUserById(id=SHARED_USER_ID)[0]
+    else:
+        relatedUser = findUserByName(name=userName)[0]
+
     if relatedUser.id:
-        newEquipment = createEquipment(name=equipmentName, shared=shared)
-        relatedUserNames = []
+        newEquipment = createEquipment(name=equipmentName, user=relatedUser)
         if newEquipment:
-            if not shared:
-                createUserEquipment(user=relatedUser, equipment=newEquipment)
-                relatedUserNames.append(relatedUser.name)
+            if shared:
+                return "Equipamento compartilhado '" + equipmentName + "' criado"
             else:
-                allUsers = findAllUsers()
-                for user in allUsers:
-                    createUserEquipment(user=user, equipment=newEquipment)
-                    relatedUserNames.append(user.name)
-            return ("Equipamento " + equipmentName + " adicionado com sucesso.\n" +
-                    "Usuários relacionados ao equipamento: " + str(relatedUserNames))
+                return "Equipamento '" + equipmentName + "' do usuário " + userName + " criado"
         else:
             return "O equipamento com o nome fornecido já está registrado. Escolha outro nome"
     else:
         return "O nome de usuário fornecido não existe"
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> master
 
 # Measurement
 def addMeasurement(equipmentName, consumption):
@@ -74,4 +80,3 @@ def createOrUpdateUserBills(bill):
             updateUserBill(bill=bill, user=u, consumption=userConsumption, amount=userAmount)
         else:
             createUserBill(bill=bill, user=u, consumption=userConsumption, amount=userAmount)
->>>>>>> Stashed changes

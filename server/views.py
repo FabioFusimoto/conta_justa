@@ -3,7 +3,7 @@ import django_rq
 import time
 import json
 
-from .application.commands import addUser, addEquipment
+from .application.commands import addUser, addEquipment, addMeasurement
 from .connectors.queue import handler
 from .constants import ADD_USER_EVENT, ADD_EQUIPMENT_EVENT
 
@@ -27,27 +27,19 @@ def newEquipment(request):
     equipmentName = body['equipmentName']
     userName = body['userName']
     shared = body['shared']
-    if request.method == 'POST' and equipmentName and userName:
+    if request.method == 'POST' and equipmentName and (userName or shared):
         return HttpResponse(
             addEquipment(equipmentName=equipmentName, userName=userName, shared=shared))
     else:
         return HttpResponse("Invalid request")
 
-def newUserViaHandler(request):
-    userName = json.loads(request.body)['name']
-    if request.method == 'POST':
-        django_rq.enqueue(handler, eventName=ADD_USER_EVENT, userName=userName)
-        return HttpResponse("Evento de criação de novo usuário adicionado à fila")
-    else:
-        return HttpResponse("Invalid request")
-
-def newEquipmentViaHandler(request):
+def newMeasurement(request):
     body = json.loads(request.body)
     equipmentName = body['equipmentName']
-    userName = body['userName']
-    shared = body['shared']
-    if request.method == 'POST' and equipmentName and userName:
-        django_rq.enqueue(handler, eventName=ADD_EQUIPMENT_EVENT, equipmentName=equipmentName, userName=userName, shared=shared)
-        return HttpResponse("Evento de criação de novo equipamento adicionado à fila")
+    consumption = body['consumption']
+    if request.method == 'POST' and equipmentName and consumption:
+        return HttpResponse(
+            addMeasurement(equipmentName=equipmentName, consumption=consumption)
+        )
     else:
         return HttpResponse("Invalid request")
