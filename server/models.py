@@ -42,7 +42,23 @@ class Bill(models.Model):
     def __str__(self):
         return(
             "ID: " + str(self.id) + "\n"
-            "Mês: " + str(self.month) + "/" + str(year) + "\n"
+            "Mês: " + str(self.month) + "/" + str(self.year) + "\n"
+            "Consumo: " + str(self.consumption) + "\n"
+            "Valor: " + str(self.amount) + "\n"
+            "Atualizada em: " + str(self.updatedAt)
+        )
+
+class UserBill(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    bill = models.ForeignKey(Bill, on_delete=models.CASCADE)
+    consumption = models.DecimalField(max_digits=20, decimal_places=3)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    updatedAt = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return(
+            "ID: " + str(self.id) + "\n"
+            "Mês: " + str(self.bill.month) + "/" + str(self.bill.year) + "\n"
             "Consumo: " + str(self.consumption) + "\n"
             "Valor: " + str(self.amount) + "\n"
             "Atualizada em: " + str(self.updatedAt)

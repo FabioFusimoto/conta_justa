@@ -1,17 +1,18 @@
 import datetime
 from django.db import IntegrityError
-from ..models import User, Equipment, Measurement, Bill
+from django.db.models import Q
+from ..models import User, Equipment, Measurement, Bill, UserBill
 from ..constants import SHARED_USER_ID
 
 # User
+def findAllUsers():
+    return User.objects.all().filter(~Q(id = SHARED_USER_ID)) # the ~Q excludes the shared user
+
 def findUserByName(name):
     return User.objects.all().filter(name=name)[:1]
 
 def findUserById(id):
     return User.objects.all().filter(id=id)[:1]
-
-def findAllUsers():
-    return User.objects.all()
 
 def createUser(name):
     try:
@@ -71,9 +72,29 @@ def findBill(year, month):
 def createBill(year, month, consumption, amount):
     newBill = Bill(year=year, month=month, consumption=consumption, amount=amount)
     newBill.save()
+    return newBill
 
 def updateBill(year, month, consumption, amount):
     billToUpdate = Bill.objects.get(year=year, month=month)
     billToUpdate.consumption = consumption
     billToUpdate.amount = amount
+    billToUpdate.updatedAt = datetime.datetime.now()
     billToUpdate.save()
+    return billToUpdate
+
+# UserBill
+def findUserBill(bill, user):
+    return UserBill.objects.all().filter(bill=bill, user=user)[:1]
+
+def updateUserBill(bill, user, consumption, amount):
+    userBillToUpdate = UserBill.objects.get(bill=bill, user=user)
+    userBillToUpdate.consumption = consumption
+    userBillToUpdate.amount = amount
+    userBillToUpdate.updatedAt = datetime.datetime.now()
+    userBillToUpdate.save()
+    return userBillToUpdate
+
+def createUserBill(bill, user, consumption, amount):
+    newUserBill = UserBill(bill=bill, user=user, consumption=consumption, amount=amount)
+    newUserBill.save()
+    return newUserBill

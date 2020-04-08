@@ -1,14 +1,15 @@
 # SELECT
-from ..connectors.database import findUserById, findUserByName, findAllUsers, findEquipmentByName, findBill
+from ..connectors.database import findUserById, findUserByName, findAllUsers, findEquipmentByName, findBill, findUserBill
 
 # INSERT
-from ..connectors.database import createUser, createEquipment, createMeasurement, createBill
+from ..connectors.database import createUser, createEquipment, createMeasurement, createBill, createUserBill
 
 # UPDATE
-from ..connectors.database import updateBill
+from ..connectors.database import updateBill, updateUserBill
 
 from ..constants import SHARED_USER_ID
-from .query import getBillParameters
+from .query import getBillParameters, getUserConsumption, getSharedConsumption
+from ..domain.domain import calculateUserBillAmount, calculateUserConsumption
 
 # User
 def addUser(name):
@@ -55,9 +56,21 @@ def addMeasurement(equipmentName, consumption):
 
 # Bill
 def createOrUpdateBill(year, month):
-    sharedUser = findUserById(id=SHARED_USER_ID)[0]
     consumption, amount = getBillParameters(year=year, month=month)
     if len(findBill(year=year, month=month)) > 0:
-        updateBill(year, month, consumption, amount)
+        bill = updateBill(year, month, consumption, amount)
     else:
-        createBill(year, month, consumption, amount)
+        bill = createBill(year, month, consumption, amount)
+    createOrUpdateUserBills(bill=bill)
+
+def createOrUpdateUserBills(bill):
+    sharedConsumption = getSharedConsumption(month=bill.month, year=bill.year)
+    users = findAllUsers()
+    for u in users:
+        selfConsumption = getUserConsumption(user=u, month=bill.month, year=bill.year)
+        userAmount = calculateUserBillAmount(sharedConsumption, selfConsumption, bill.consumption, bill.amount, len(users))
+        userConsumption = calculateUserConsumption(sharedConsumption, selfConsumption, len(users))
+        if len(findUserBill(bill=bill, user=u)) > 0:
+            updateUserBill(bill=bill, user=u, consumption=userConsumption, amount=userAmount)
+        else:
+            createUserBill(bill=bill, user=u, consumption=userConsumption, amount=userAmount)

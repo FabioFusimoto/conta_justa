@@ -1,12 +1,25 @@
-from ..connectors.database import findAllEquipmentsForUser, findAllMeasurementsForYearMonth
+from ..connectors.database import findAllEquipmentsForUser, findAllMeasurementsForYearMonth, findAllMeasurementsForYearMonthEquipment, findUserById
 from ..constants import SHARED_USER_ID
 from ..domain.domain import calculateBillAmount
 
 def getBillParameters(year, month):
-    sharedConsumption = 0.0
+    totalConsumption = 0.0
     mList = findAllMeasurementsForYearMonth(year=year, month=month)
     for m in mList:
-        sharedConsumption += float(m.consumption)
+        totalConsumption += float(m.consumption)
 
-    sharedAmount = calculateBillAmount(consumption=sharedConsumption)
-    return sharedConsumption, sharedAmount
+    totalAmount = calculateBillAmount(consumption=totalConsumption)
+    return totalConsumption, totalAmount
+
+def getUserConsumption(user, year, month):
+    equipmentsForUser = findAllEquipmentsForUser(user=user)
+    consumption = 0.0
+    for e in equipmentsForUser:
+        for m in findAllMeasurementsForYearMonthEquipment(e, year, month):
+            consumption += float(m.consumption)
+
+    return consumption
+
+def getSharedConsumption(year, month):
+    sharedUser = findUserById(id=SHARED_USER_ID)
+    return getUserConsumption(user=sharedUser, year=year, month=month)
