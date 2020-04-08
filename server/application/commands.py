@@ -36,3 +36,42 @@ def addEquipment(equipmentName, userName, shared=False):
             return "O equipamento com o nome fornecido já está registrado. Escolha outro nome"
     else:
         return "O nome de usuário fornecido não existe"
+<<<<<<< Updated upstream
+=======
+
+# Measurement
+def addMeasurement(equipmentName, consumption):
+    relatedEquipment = findEquipmentByName(name=equipmentName)[0]
+
+    if relatedEquipment.id:
+        newMeasurement = createMeasurement(equipment=relatedEquipment, consumption=consumption)
+        user = relatedEquipment.user
+        year = newMeasurement.measuredAt.year
+        month = newMeasurement.measuredAt.month
+        createOrUpdateBill(year, month)
+        return "Medição adicionada com sucesso"
+    else:
+        return "O equipamento com o nome fornecido não existe"
+
+# Bill
+def createOrUpdateBill(year, month):
+    consumption, amount = getBillParameters(year=year, month=month)
+    if len(findBill(year=year, month=month)) > 0:
+        bill = updateBill(year, month, consumption, amount)
+    else:
+        bill = createBill(year, month, consumption, amount)
+    createOrUpdateUserBills(bill=bill)
+
+# User Bill
+def createOrUpdateUserBills(bill):
+    sharedConsumption = getSharedConsumption(month=bill.month, year=bill.year)
+    users = findAllUsers()
+    for u in users:
+        selfConsumption = getUserConsumption(user=u, month=bill.month, year=bill.year)
+        userAmount = calculateUserBillAmount(sharedConsumption, selfConsumption, bill.consumption, bill.amount, len(users))
+        userConsumption = calculateUserConsumption(sharedConsumption, selfConsumption, len(users))
+        if len(findUserBill(bill=bill, user=u)) > 0:
+            updateUserBill(bill=bill, user=u, consumption=userConsumption, amount=userAmount)
+        else:
+            createUserBill(bill=bill, user=u, consumption=userConsumption, amount=userAmount)
+>>>>>>> Stashed changes
