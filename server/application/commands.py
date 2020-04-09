@@ -47,8 +47,8 @@ def addMeasurement(equipmentName, consumption):
     if relatedEquipment.id:
         newMeasurement = createMeasurement(equipment=relatedEquipment, consumption=consumption)
         user = relatedEquipment.user
-        year = newMeasurement.measuredAt.year
-        month = newMeasurement.measuredAt.month
+        year = newMeasurement.measured_at.year
+        month = newMeasurement.measured_at.month
         createOrUpdateBill(year, month)
         return "Medição adicionada com sucesso"
     else:
@@ -63,6 +63,7 @@ def createOrUpdateBill(year, month):
         bill = createBill(year, month, consumption, amount)
     createOrUpdateUserBills(bill=bill)
 
+# User Bill
 def createOrUpdateUserBills(bill):
     sharedConsumption = getSharedConsumption(month=bill.month, year=bill.year)
     users = findAllUsers()
