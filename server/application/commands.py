@@ -39,11 +39,6 @@ def addEquipment(equipmentName, userName, shared=False):
             return "O equipamento com o nome fornecido já está registrado. Escolha outro nome"
     else:
         return "O nome de usuário fornecido não existe"
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> master
 
 # Measurement
 def addMeasurement(equipmentName, consumption):
@@ -52,8 +47,8 @@ def addMeasurement(equipmentName, consumption):
     if relatedEquipment.id:
         newMeasurement = createMeasurement(equipment=relatedEquipment, consumption=consumption)
         user = relatedEquipment.user
-        year = newMeasurement.measuredAt.year
-        month = newMeasurement.measuredAt.month
+        year = newMeasurement.measured_at.year
+        month = newMeasurement.measured_at.month
         createOrUpdateBill(year, month)
         return "Medição adicionada com sucesso"
     else:

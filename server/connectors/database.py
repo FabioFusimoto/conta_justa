@@ -40,7 +40,7 @@ def findAllEquipmentsForUser(user):
 
 # Measurement
 def createMeasurement(equipment, consumption):
-    newMeasurement = Measurement(equipment=equipment, consumption=consumption) # o campo measuredAt é automaticamente setado para now(), ver o models.py
+    newMeasurement = Measurement(equipment=equipment, consumption=consumption) # o campo measured_at é automaticamente setado para now(), ver o models.py
     newMeasurement.save()
     return newMeasurement
 
@@ -52,7 +52,7 @@ def findAllMeasurementsForYearMonth(year, month):
         nextMonth = 1
         newYear = newYear + 1
     finish = datetime.datetime(year=newYear, month=newMonth, day=1)
-    return Measurement.objects.all().filter(measuredAt__range=(start, finish))
+    return Measurement.objects.all().filter(measured_at__range=(start, finish))
 
 def findAllMeasurementsForYearMonthEquipment(equipment, year, month):
     start = datetime.datetime(year=year, month=month, day=1)
@@ -63,7 +63,7 @@ def findAllMeasurementsForYearMonthEquipment(equipment, year, month):
         newYear = newYear + 1
     finish = datetime.datetime(year=newYear, month=newMonth, day=1)
 
-    return Measurement.objects.all().filter(equipment=equipment, measuredAt__range=(start, finish))
+    return Measurement.objects.all().filter(equipment=equipment, measured_at__range=(start, finish))
 
 # Bill
 def findBill(year, month):
@@ -78,7 +78,7 @@ def updateBill(year, month, consumption, amount):
     billToUpdate = Bill.objects.get(year=year, month=month)
     billToUpdate.consumption = consumption
     billToUpdate.amount = amount
-    billToUpdate.updatedAt = datetime.datetime.now()
+    billToUpdate.updated_at = datetime.datetime.now()
     billToUpdate.save()
     return billToUpdate
 
@@ -90,7 +90,7 @@ def updateUserBill(bill, user, consumption, amount):
     userBillToUpdate = UserBill.objects.get(bill=bill, user=user)
     userBillToUpdate.consumption = consumption
     userBillToUpdate.amount = amount
-    userBillToUpdate.updatedAt = datetime.datetime.now()
+    userBillToUpdate.updated_at = datetime.datetime.now()
     userBillToUpdate.save()
     return userBillToUpdate
 
