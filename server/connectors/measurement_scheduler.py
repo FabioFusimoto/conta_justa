@@ -1,6 +1,6 @@
-from server.connectors.queue import handler
+from .queue import handler
 
-from .models import Equipment
+from server.models import Equipment
 
 import random
 
