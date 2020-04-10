@@ -11,6 +11,7 @@ from ..constants import SHARED_USER_ID
 from .query import getBillParameters, getUserConsumption, getSharedConsumption
 from ..domain.domain import calculateUserBillAmount, calculateUserConsumption
 
+
 # User
 def addUser(name):
     if name:
@@ -20,6 +21,7 @@ def addUser(name):
             return "Erro: O nome do usuário deve ser único"
     else:
         return "Erro: O nome não foi fornecido"
+
 
 # Equipment
 def addEquipment(equipmentName, userName, shared=False):
@@ -40,6 +42,7 @@ def addEquipment(equipmentName, userName, shared=False):
     else:
         return "O nome de usuário fornecido não existe"
 
+
 # Measurement
 def addMeasurement(equipmentName, consumption):
     relatedEquipment = findEquipmentByName(name=equipmentName)[0]
@@ -53,6 +56,7 @@ def addMeasurement(equipmentName, consumption):
         return "Medição adicionada com sucesso"
     else:
         return "O equipamento com o nome fornecido não existe"
+
 
 # Bill
 def createOrUpdateBill(year, month):
