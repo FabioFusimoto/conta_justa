@@ -7,4 +7,5 @@ urlpatterns = [
     path('add-user', views.newUser, name='add-user'),
     path('add-equipment', views.newEquipment, name='add-equipment'),
     path('add-measurement', views.newMeasurement, name='add-measurement'),
+    path('populate-database', views.fillDatabase, name='populate-database')
 ]

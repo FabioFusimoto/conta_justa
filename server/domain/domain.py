@@ -7,7 +7,11 @@ def calculateUserConsumption(sharedConsumption, selfConsumption, userCount):
     return selfConsumption + (sharedConsumption/userCount)
 
 def calculateUserBillAmount(sharedConsumption, selfConsumption, totalConsumption, billAmount, userCount):
-    sharedPart = (sharedConsumption/totalConsumption) * (billAmount/userCount)
+    if (totalConsumption == 0) or (userCount == 0):
+        sharedPart = 0.0
+    else:
+        sharedPart = (sharedConsumption/totalConsumption) * (billAmount/userCount)
+
     if totalConsumption > sharedConsumption:
         individualPart = (billAmount - (sharedPart * userCount)) * selfConsumption / (totalConsumption - sharedConsumption)
     else:

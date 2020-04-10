@@ -12,9 +12,9 @@ from .query import getBillParameters, getUserConsumption, getSharedConsumption
 from ..domain.domain import calculateUserBillAmount, calculateUserConsumption
 
 # User
-def addUser(name):
+def addUser(id, name):
     if name:
-        if createUser(name=name):
+        if createUser(id=id, name=name):
             return "Usuário criado com sucesso"
         else:
             return "Erro: O nome do usuário deve ser único"
@@ -22,7 +22,7 @@ def addUser(name):
         return "Erro: O nome não foi fornecido"
 
 # Equipment
-def addEquipment(equipmentName, userName, shared=False):
+def addEquipment(equipmentName, userName='', shared=False):
     if shared:
         relatedUser = findUserById(id=SHARED_USER_ID)[0]
     else:
@@ -41,11 +41,11 @@ def addEquipment(equipmentName, userName, shared=False):
         return "O nome de usuário fornecido não existe"
 
 # Measurement
-def addMeasurement(equipmentName, consumption):
+def addMeasurement(equipmentName, consumption, measuredAt):
     relatedEquipment = findEquipmentByName(name=equipmentName)[0]
 
     if relatedEquipment.id:
-        newMeasurement = createMeasurement(equipment=relatedEquipment, consumption=consumption)
+        newMeasurement = createMeasurement(equipment=relatedEquipment, consumption=consumption, measuredAt=measuredAt)
         user = relatedEquipment.user
         year = newMeasurement.measured_at.year
         month = newMeasurement.measured_at.month

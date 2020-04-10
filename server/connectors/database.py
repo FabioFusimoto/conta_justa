@@ -14,9 +14,12 @@ def findUserByName(name):
 def findUserById(id):
     return User.objects.all().filter(id=id)[:1]
 
-def createUser(name):
+def createUser(id, name):
     try:
-        newUser = User(name=name)
+        if id:
+            newUser = User(id=id, name=name)
+        else:
+            newUser = User(name=name)
         newUser.save()
     except IntegrityError:
         return(False)
@@ -39,8 +42,8 @@ def findAllEquipmentsForUser(user):
     return Equipment.objects.all().filter(user=user)
 
 # Measurement
-def createMeasurement(equipment, consumption):
-    newMeasurement = Measurement(equipment=equipment, consumption=consumption) # o campo measured_at é automaticamente setado para now(), ver o models.py
+def createMeasurement(equipment, consumption, measuredAt):
+    newMeasurement = Measurement(equipment=equipment, consumption=consumption, measured_at=measuredAt)
     newMeasurement.save()
     return newMeasurement
 
