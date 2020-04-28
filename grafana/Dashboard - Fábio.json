@@ -59,7 +59,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1586392928130,
+  "iteration": 1586547700714,
   "links": [
     {
       "$$hashKey": "object:4482",
@@ -401,17 +401,13 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "blue",
+                  "color": "green",
                   "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
                 }
               ]
             },
             "title": "",
-            "unit": "none"
+            "unit": "watth"
           },
           "overrides": [],
           "values": false
@@ -799,7 +795,7 @@
       "colorPrefix": false,
       "colorValue": false,
       "colors": [
-        "#5794F2",
+        "#56A64B",
         "#FF9830",
         "#d44a3a"
       ],
@@ -889,7 +885,7 @@
           ]
         }
       ],
-      "thresholds": "5000, 10000",
+      "thresholds": "100000, 150000",
       "timeFrom": null,
       "timeShift": null,
       "title": "Abril",
@@ -1822,13 +1818,13 @@
                 "value": "$userConsumption"
               }
             ],
-            "max": 12000,
+            "max": 47500,
             "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "red",
+                  "color": "green",
                   "value": null
                 }
               ]
@@ -1911,12 +1907,8 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "super-light-blue",
+                  "color": "purple",
                   "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
                 }
               ]
             },
@@ -2013,12 +2005,8 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green",
+                  "color": "purple",
                   "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
                 }
               ]
             },
@@ -2085,13 +2073,13 @@
           ],
           "defaults": {
             "mappings": [],
-            "max": 12000,
+            "max": 0,
             "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "orange",
+                  "color": "purple",
                   "value": null
                 }
               ]
@@ -2199,5 +2187,5 @@
   "variables": {
     "list": []
   },
-  "version": 10
+  "version": 13
 }

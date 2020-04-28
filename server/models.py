@@ -23,7 +23,7 @@ class Equipment(models.Model):
 class Measurement(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     consumption = models.DecimalField(default=0.0, max_digits=10, decimal_places=3)
-    measured_at = models.DateTimeField(auto_now_add=True)
+    measured_at = models.DateTimeField()
 
     def __str__(self):
         return(

@@ -17,6 +17,7 @@ Os comandos de instalação foram testados no Ubuntu 18.04 e podem ser ligeirame
 - Instale a versão mais recente do [Python 3.6](https://www.python.org/downloads/)
 - Baixe e instale o [Postgres 10](https://www.postgresql.org/download/)
 - Baixe e instale o [Redis](https://redis.io/topics/quickstart)
+- Baixe e instale o [Grafana](https://grafana.com/docs/grafana/latest/installation/) e habilite a inicialização junto com o sistema operacional
 - Faça o setup do banco de dados e usuário do PostgreSQL (comando válidos para Linux)<br/>
 `$ sudo su - postgres`<br/>
 `$ psql`<br/>
@@ -51,8 +52,13 @@ Os comandos de instalação foram testados no Ubuntu 18.04 e podem ser ligeirame
 `$ redis-server`
 - Inicie o RQ-Worker<br/>
 `$ python3 manage.py rqworker default`
-- Inicie o servidor (roda em [localhost:3030](localhost:3030))<br/>
-`# python3 manage.py runserver 3030`<br/>
+- Inicie o servidor (roda em [localhost:3030](http://localhost:3030))<br/>
+`# python3 -W ignore manage.py runserver 3030`<br/>
+- Acesse esse [endpoint](http://localhost:3030/server/populate-database) para que o banco de dados seja populado com seu estado default (certifique-se de não ter adicionado nenhuma linha manualmente antes de acessar esse endpoint). O sistema pode levar alguns minutos para adicionar as instâncias ao banco vazio (seja paciente, o sistema não travou, você pode acompanhar o progresso no console onde o servidor foi executado). Ao final, uma mensagem surgirá de quantas medições foram inseridas no banco<br/>
+- Certifique-se que o Grafana está rodando<br/>
+`# sudo systemctl status grafana-server`<br/>
+- Para acessar o dashboard, entre no grafana (por padrão, roda em [localhost:3000](http://localhost:3000))<br/>
+- Para ter acesso às funções administrativas (adicionar um novo equipamento, por exemplo), acesse a [página de admin](http://localhost:3030/admin) enquanto o servidor estiver sendo executado<br/>
 
 ## Organização de diretórios
 Os diretórios estão dispostos para seguir a arquitetura hexagonal modificada proposta no [vídeo de detalhamento do projeto](https://www.youtube.com/watch?v=7ZmzBEF5uiQ&list=UUH9esjC9hxJvEErKOnuPiXQ). Algumas exceções à disposição da arquitetura existem para atender às restrições de diretório impostas pelo Django. As pastas relevantes estão descritas abaixo

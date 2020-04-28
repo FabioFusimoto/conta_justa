@@ -1,4 +1,46 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_CONTA_JUSTA_- POSTGRESQL",
+      "label": "Conta_Justa - PostgreSQL",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "6.7.1"
+    },
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -16,11 +58,11 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 6,
-  "iteration": 1586392975446,
+  "id": null,
+  "iteration": 1586546791851,
   "links": [
     {
-      "$$hashKey": "object:4091",
+      "$$hashKey": "object:4482",
       "icon": "external link",
       "tags": [
         "conta_justa"
@@ -40,7 +82,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "description": "",
       "format": "none",
       "gauge": {
@@ -151,7 +193,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -254,7 +296,7 @@
       "valueName": "current"
     },
     {
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "gridPos": {
         "h": 3,
         "w": 7,
@@ -328,7 +370,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "gridPos": {
         "h": 7,
         "w": 9,
@@ -359,17 +401,13 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "blue",
+                  "color": "orange",
                   "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
                 }
               ]
             },
             "title": "",
-            "unit": "none"
+            "unit": "watth"
           },
           "overrides": [],
           "values": false
@@ -425,7 +463,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -537,7 +575,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#5794F2"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -649,7 +687,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -757,11 +795,11 @@
       "colorPrefix": false,
       "colorValue": false,
       "colors": [
-        "#5794F2",
+        "#56A64B",
         "#FF9830",
         "#d44a3a"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -847,7 +885,7 @@
           ]
         }
       ],
-      "thresholds": "5000, 10000",
+      "thresholds": "50000, 150000",
       "timeFrom": null,
       "timeShift": null,
       "title": "Abril",
@@ -867,7 +905,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#5794F2"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -979,7 +1017,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#5794F2"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -1091,7 +1129,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#5794F2"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -1203,7 +1241,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#5794F2"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -1315,7 +1353,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#5794F2"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -1427,7 +1465,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#5794F2"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -1539,7 +1577,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#5794F2"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -1651,7 +1689,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#5794F2"
       ],
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "decimals": 1,
       "format": "watth",
       "gauge": {
@@ -1753,7 +1791,7 @@
       "valueName": "avg"
     },
     {
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "gridPos": {
         "h": 4,
         "w": 9,
@@ -1780,13 +1818,13 @@
                 "value": "$userConsumption"
               }
             ],
-            "max": 12000,
+            "max": 47500,
             "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "red",
+                  "color": "green",
                   "value": null
                 }
               ]
@@ -1838,7 +1876,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "gridPos": {
         "h": 5,
         "w": 3,
@@ -1869,12 +1907,8 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "super-light-blue",
+                  "color": "purple",
                   "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
                 }
               ]
             },
@@ -1940,7 +1974,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "gridPos": {
         "h": 5,
         "w": 5,
@@ -1971,12 +2005,8 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green",
+                  "color": "purple",
                   "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
                 }
               ]
             },
@@ -2027,7 +2057,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Conta_Justa - PostgreSQL",
+      "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
       "gridPos": {
         "h": 3,
         "w": 9,
@@ -2043,13 +2073,13 @@
           ],
           "defaults": {
             "mappings": [],
-            "max": 12000,
+            "max": 51000,
             "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "orange",
+                  "color": "purple",
                   "value": null
                 }
               ]
@@ -2110,11 +2140,8 @@
     "list": [
       {
         "allValue": null,
-        "current": {
-          "text": "5",
-          "value": "5"
-        },
-        "datasource": "Conta_Justa - PostgreSQL",
+        "current": {},
+        "datasource": "${DS_CONTA_JUSTA_- POSTGRESQL}",
         "definition": "select id from server_user where name = 'Gustavo Ziyu Wang'",
         "hide": 0,
         "includeAll": false,
@@ -2156,9 +2183,9 @@
   },
   "timezone": "",
   "title": "Conta Justa - Gustavo",
-  "uid": "czlPj0jZk",
+  "uid": "deZPALjWk",
   "variables": {
     "list": []
   },
-  "version": 5
+  "version": 2
 }

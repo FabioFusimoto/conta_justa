@@ -1,11 +1,13 @@
 from django.http import HttpResponse
 import django_rq
-import time
+import datetime
 import json
 
 from .application.commands import addUser, addEquipment, addMeasurement
 from .connectors.queue import handler
 from .constants import ADD_USER_EVENT, ADD_EQUIPMENT_EVENT
+
+from .scripts.populate_database import populateDatabase
 
 def printMessage(header, message):
     print(header)
@@ -16,9 +18,14 @@ def index(request):
     return HttpResponse("Hello, you are at the server index")
 
 def newUser(request):
-    name = json.loads(request.body)['name']
+    body = json.loads(request.body)
+    if 'id' in body.keys():
+        id = body['id']
+    else:
+        id = False
+    name = body['name']
     if request.method == 'POST':
-        return HttpResponse(addUser(name=name))
+        return HttpResponse(addUser(id=id, name=name))
     else:
         return HttpResponse("Invalid request")
 
@@ -37,9 +44,14 @@ def newMeasurement(request):
     body = json.loads(request.body)
     equipmentName = body['equipmentName']
     consumption = body['consumption']
+    measuredAt = datetime.datetime.strptime(body['measuredAt'], '%d/%m/%Y %H:%M:%S')
     if request.method == 'POST' and equipmentName and consumption:
         return HttpResponse(
-            addMeasurement(equipmentName=equipmentName, consumption=consumption)
+            addMeasurement(equipmentName=equipmentName, consumption=consumption, measuredAt=measuredAt)
         )
     else:
         return HttpResponse("Invalid request")
+
+def fillDatabase(request):
+    measurementsAdded = populateDatabase()
+    return HttpResponse(str(measurementsAdded) + ' new measurements added')
