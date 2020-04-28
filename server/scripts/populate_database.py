@@ -43,8 +43,9 @@ def populateDatabase():
     print('\nHours since the start of the year: ' + str(hoursSinceStartOfTheYear))
     print('Measurement count: ' + str(measurementCount))
 
+    measurementsAdded = 0
+
     if not (getMeasurementCount() > 0): # creates measurements only if database is empty
-        measurementsAdded = 0
         while measurementDate < now:
             for e in (individualEquipments + sharedEquipments):
                 threshold = random()
